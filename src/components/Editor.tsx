@@ -3,7 +3,6 @@ import BlockToolbar from "./BlockToolbar";
 import BlockRenderer from "./BlockRenderer";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { useEditor } from "../context/EditorContext";
-// import { Block } from "../types/types";
 
 const Editor: React.FC = () => {
   const { blocks, reorderBlocks } = useEditor();
@@ -32,7 +31,7 @@ const Editor: React.FC = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <BlockRenderer block={block} />
+                      <BlockRenderer block={{ ...block, type: block.type as import("../types/types").BlockType }} />
                     </div>
                   )}
                 </Draggable>

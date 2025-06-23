@@ -30,16 +30,14 @@ interface EditorProviderProps {
 export const EditorProvider = ({ children }: EditorProviderProps) => {
   const [blocks, setBlocks] = useState<Block[]>([]);
 
-interface AddBlock {
-    (type: string): void;
-}
 
-const addBlock: AddBlock = (type) => {
-    setBlocks((prev: Block[]) => [
-        ...prev,
-        { id: uuidv4(), type, content: "" }
-    ]);
+const addBlock = (type: string) => {
+  setBlocks((prev) => [
+    ...prev,
+    { id: uuidv4(), type: type, content: "" }
+  ]);
 };
+
 
 interface UpdateBlock {
     (id: string, newContent: string): void;
