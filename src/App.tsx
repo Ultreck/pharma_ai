@@ -2,7 +2,7 @@ import React from "react";
 import { EditorProvider } from "./context/EditorContext";
 import Editor from "./components/Editor";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <EditorProvider>
       <div className="min-h-screen bg-gray-100 p-6">

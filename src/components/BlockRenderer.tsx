@@ -1,20 +1,11 @@
 import React from "react";
+import { Block } from "../types/types";
 import HeadingBlock from "./HeadingBlock";
 import ParagraphBlock from "./ParagraphBlock";
 import ImageBlock from "./ImageBlock";
 import YouTubeBlock from "./YouTubeBlock";
 
-type Block = 
-  | { type: "heading"; [key: string]: any }
-  | { type: "paragraph"; [key: string]: any }
-  | { type: "image"; [key: string]: any }
-  | { type: "youtube"; [key: string]: any };
-
-interface BlockRendererProps {
-  block: Block;
-}
-
-const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
+const BlockRenderer: React.FC<{ block: Block }> = ({ block }) => {
   switch (block.type) {
     case "heading":
       return <HeadingBlock block={block} />;

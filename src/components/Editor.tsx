@@ -1,37 +1,31 @@
+import React from "react";
 import BlockToolbar from "./BlockToolbar";
 import BlockRenderer from "./BlockRenderer";
-import { DragDropContext, Droppable, Draggable, DroppableProvided, DraggableProvided, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { useEditor } from "../context/EditorContext";
+// import { Block } from "../types/types";
 
-
-const Editor = () => {
+const Editor: React.FC = () => {
   const { blocks, reorderBlocks } = useEditor();
 
-interface Block {
-    id: string;
-    type: string;
-    content: any;
-    // Add other block properties as needed
-}
-
-const handleDragEnd = (result: DropResult) => {
+  const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const items: Block[] = Array.from(blocks);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    reorderBlocks(items);
-};
+    const reordered = Array.from(blocks);
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+    reorderBlocks(reordered);
+  };
 
   return (
-    <div>
+    <>
       <BlockToolbar />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="editor">
-          {(provided: DroppableProvided) => (
+          {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {blocks.map((block: Block, index: number) => (
+              {blocks.map((block, index) => (
                 <Draggable key={block.id} draggableId={block.id} index={index}>
-                  {(provided: DraggableProvided) => (
+                  {(provided) => (
                     <div
                       className="bg-white p-3 my-2 rounded shadow"
                       ref={provided.innerRef}
@@ -48,7 +42,7 @@ const handleDragEnd = (result: DropResult) => {
           )}
         </Droppable>
       </DragDropContext>
-    </div>
+    </>
   );
 };
 
